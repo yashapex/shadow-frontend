@@ -19,13 +19,14 @@ import InterviewHistory from "./pages/dashboard/InterviewHistory";
 import SkillAnalysis from "./pages/dashboard/SkillAnalysis";
 import ProfileSettings from "./pages/dashboard/ProfileSettings";
 import CandidateJobs from "./pages/dashboard/CandidateJobs";
+import CandidateLiveInterview from "./pages/dashboard/CandidateLiveInterview"; // Import added
 
 // Recruiter imports
 import { RecruiterLayout } from "./components/recruiter/RecruiterLayout";
 import RecruiterDashboard from "./pages/recruiter/RecruiterDashboard";
 import JobPostings from "./pages/recruiter/JobPostings";
 import CandidateManagement from "./pages/recruiter/CandidateManagement";
-import InterviewManagement from "./pages/recruiter/PreInterviewManagement"; // Make sure this path is correct based on your file structure
+import InterviewManagement from "./pages/recruiter/PreInterviewManagement";
 import BiasAnalytics from "./pages/recruiter/BiasAnalytics";
 import Reports from "./pages/recruiter/Reports";
 import RecruiterSettings from "./pages/recruiter/RecruiterSettings";
@@ -57,6 +58,7 @@ const App = () => (
                 <Route path="jobs" element={<CandidateJobs />} />
                 <Route path="applications" element={<AppliedJobs />} />
                 <Route path="interview" element={<MockInterview />} />
+                <Route path="live-interviews" element={<CandidateLiveInterview />} /> {/* New Route */}
                 <Route path="history" element={<InterviewHistory />} />
                 <Route path="skills" element={<SkillAnalysis />} />
                 <Route path="profile" element={<ProfileSettings />} />

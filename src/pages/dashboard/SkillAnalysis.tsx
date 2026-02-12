@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import api from "@/lib/axiosconfig";
 import { useToast } from "@/hooks/use-toast";
@@ -61,95 +60,10 @@ interface SkillAnalysisData {
   }[];
 }
 
-
-
 const SkillAnalysis = () => {
-  // const [loading, setLoading] = useState(true); // Start loading true
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [analysisData, setAnalysisData] = useState<SkillAnalysisData | null>(null);
-
-  // --- Run AI Analysis ---
-//   const runAnalysis = async () => {
-//     try {
-//       setLoading(true);
-      
-//       // Call Claude API to analyze the resume
-//       const response = await fetch("https://api.anthropic.com/v1/messages", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           model: "claude-sonnet-4-20250514",
-//           max_tokens: 1000,
-//           messages: [
-//             {
-//               role: "user",
-//               content: `You are a career analysis expert. I need you to analyze a candidate's resume and provide a comprehensive skill analysis.
-
-// Fetch the candidate's resume from the backend at /api/profile/candidate and analyze it to provide:
-
-// 1. **Skill Proficiency**: List 8-10 key technical and soft skills with proficiency percentages (0-100)
-// 2. **Strengths**: Identify 3-4 key strengths with brief descriptions
-// 3. **Areas for Growth**: Identify 3 areas where the candidate can improve
-// 4. **Career Matches**: Suggest 4 job roles that match their profile with match percentages
-// 5. **Radar Chart Data**: Provide 6 skill categories (e.g., React, TypeScript, Node.js, System Design, Communication, Problem Solving) with values 0-100
-
-// Return ONLY a valid JSON object with this exact structure:
-// {
-//   "skills": [
-//     {"name": "React", "category": "Frontend", "proficiency": 92},
-//     {"name": "TypeScript", "category": "Language", "proficiency": 85}
-//   ],
-//   "strengths": [
-//     {"title": "React Development", "description": "Expert-level knowledge with hooks, context, and optimization patterns"}
-//   ],
-//   "growthAreas": [
-//     {"title": "System Design", "description": "Need more practice with distributed systems concepts"}
-//   ],
-//   "careerMatches": [
-//     {"role": "Senior Frontend Engineer", "match": 95}
-//   ],
-//   "radarChartData": [
-//     {"category": "React", "value": 92},
-//     {"category": "TypeScript", "value": 85}
-//   ]
-// }
-
-// Do not include any markdown formatting, code blocks, or explanatory text. Return only the JSON object.`,
-//             },
-//           ],
-//         }),
-//       });
-
-  //     const data = await response.json();
-      
-  //     // Extract the text content from Claude's response
-  //     const textContent = data.content
-  //       .filter((item: any) => item.type === "text")
-  //       .map((item: any) => item.text)
-  //       .join("");
-
-  //     // Parse the JSON response
-  //     const analysisResult: SkillAnalysisData = JSON.parse(textContent);
-  //     setAnalysisData(analysisResult);
-      
-  //     toast({
-  //       title: "Analysis Complete!",
-  //       description: "Your skill analysis has been generated successfully.",
-  //     });
-  //   } catch (error: any) {
-  //     console.error("Analysis error:", error);
-  //     toast({
-  //       title: "Analysis Failed",
-  //       description: error.message || "Could not generate analysis. Please try again.",
-  //       variant: "destructive",
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   // --- Helper: Get color based on proficiency ---
   const getProficiencyColor = (proficiency: number) => {
@@ -297,7 +211,7 @@ const SkillAnalysis = () => {
           >
             {/* Skill Overview & Career Match - Side by Side */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Skill Overview - Radar Chart Placeholder */}
+              {/* Skill Overview - Radar Chart */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -309,10 +223,17 @@ const SkillAnalysis = () => {
                 </h2>
                 
                 {/* Hexagonal Radar Chart Visualization */}
-               {/* ⚡ RECHARTS RADAR CHART (Auto-scales to any data) */}
                 <div className="h-[350px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart cx="50%" cy="50%" outerRadius="70%" data={analysisData.radarChartData}>
+                      {/* ⚡ UPDATED: Red Gradient Definition */}
+                      <defs>
+                        <linearGradient id="radarThemeGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
+                          <stop offset="95%" stopColor="#f97316" stopOpacity={0.4} />
+                        </linearGradient>
+                      </defs>
+                      
                       <PolarGrid stroke="hsl(var(--border))" />
                       <PolarAngleAxis
                         dataKey="category"
@@ -327,9 +248,9 @@ const SkillAnalysis = () => {
                       <Radar
                         name="Candidate"
                         dataKey="value"
-                        stroke="hsl(var(--primary))"
-                        fill="hsl(var(--primary))"
-                        fillOpacity={0.3}
+                        stroke="#ef4444" 
+                        fill="url(#radarThemeGradient)"
+                        fillOpacity={0.6}
                       />
                       <Tooltip
                         contentStyle={{

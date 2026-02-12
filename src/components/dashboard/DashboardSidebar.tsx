@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, Briefcase, Mic, History, BarChart3, User, Search,
-  ChevronLeft, ChevronRight, LogOut,
+  ChevronLeft, ChevronRight, LogOut, Video // Video icon added
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/layout/Logo";
@@ -13,6 +13,7 @@ const navItems = [
   { title: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { title: "Find Jobs", path: "/dashboard/jobs", icon: Search },
   { title: "Applied Jobs", path: "/dashboard/applications", icon: Briefcase },
+  { title: "Live Interviews", path: "/dashboard/live-interviews", icon: Video }, // New Item
   { title: "Pre Interview", path: "/dashboard/interview", icon: Mic },
   // { title: "Interview History", path: "/dashboard/history", icon: History },
   { title: "Skill Analysis", path: "/dashboard/skills", icon: BarChart3 },
@@ -88,21 +89,6 @@ export const DashboardSidebar = () => {
           );
         })}
       </nav>
-
-      {/* AI Readiness */}
-      {/* <AnimatePresence>
-        {!isCollapsed && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} className="p-4 mx-4 mb-2 rounded-xl bg-gradient-to-br from-accent/10 to-destructive/5 border border-accent/20">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-medium text-muted-foreground">AI Readiness</span>
-              <span className="text-lg font-display font-bold text-gradient">87%</span>
-            </div>
-            <div className="w-full h-2 bg-muted/30 rounded-full overflow-hidden">
-              <motion.div initial={{ width: 0 }} animate={{ width: "87%" }} transition={{ duration: 1, delay: 0.5, ease: "easeOut" }} className="h-full bg-gradient-to-r from-accent to-destructive rounded-full" />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
 
       {/* Logout Button */}
       <div className="p-4 border-t border-border/30">
